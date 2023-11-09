@@ -66,9 +66,9 @@ if config_env() == :prod do
     https: [
       port: https_port,
       cipher_suite: :strong,
-      keyfile: System.get_env("KEYFILE_PATH") || raise "no KEYFILE_PATH environment variable",
-      certfile: System.get_env("CERTFILE_PATH") || raise "no CERTFILE_PATH environment variable"
-    ]
+      keyfile: System.get_env("KEYFILE_PATH") || raise("no KEYFILE_PATH environment variable"),
+      certfile: System.get_env("CERTFILE_PATH") || raise("no CERTFILE_PATH environment variable")
+    ],
     secret_key_base: secret_key_base
 
   # ## SSL Support
