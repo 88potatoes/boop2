@@ -49,9 +49,11 @@ if config_env() == :prod do
       """
 
   host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "4000")
+  http_port = 80
+  https_port = 443
 
   config :boop, BoopWeb.Endpoint,
+    force_ssl: [hsts: true],
     url: [host: host, port: 443, scheme: "https"],
     http: [
       # Enable IPv6 and bind on all interfaces.
@@ -59,8 +61,14 @@ if config_env() == :prod do
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port
+      port: http_port
     ],
+    https: [
+      port: https_port,
+      cipher_suite: :strong,
+      keyfile: System.get_env("KEYFILE_PATH") || raise "no KEYFILE_PATH environment variable",
+      certfile: System.get_env("CERTFILE_PATH") || raise "no CERTFILE_PATH environment variable"
+    ]
     secret_key_base: secret_key_base
 
   # ## SSL Support
