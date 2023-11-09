@@ -35,3 +35,8 @@ boop-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# private keys for dev
+privatekey.pem
+csr.pem
+certificate.pem
+
